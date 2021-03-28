@@ -1,0 +1,6 @@
+startup --output_user_root=/tmp/bazel_docker_root
+
+build --cxxopt=-std=c++17
+
+test --nocache_test_results
+test --test_output=errors
