@@ -38,3 +38,8 @@ alias(
     name = "Magnum",
     actual = "//src/Magnum:Magnum",
 )
+
+alias(
+    name = "Trade",
+    actual = "//src/Magnum/Trade:Trade",
+)
