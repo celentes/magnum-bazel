@@ -92,7 +92,6 @@ cc_library(
     deps = [
         ":headers",
         "@corrade//:Utility",
-        "@magnum//:Main",
     ],
 )
 
@@ -102,11 +101,9 @@ cc_library(
     deps = [
         ":headers",
         "@corrade//:Utility",
-        "@magnum//:Main",
     ],
     local_defines = [
         "CORRADE_GRACEFUL_ASSERT",
-        "Magnum_EXPORTS",
     ],
     testonly = True,
     visibility = ["//src/Magnum:__subpackages__"]

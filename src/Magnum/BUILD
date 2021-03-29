@@ -28,35 +28,6 @@ package(default_visibility = ["//visibility:public"])
 
 CURRENT_DIR = "@magnum_src//:src/Magnum/"
 
-cc_library(
-    name = "headers",
-    hdrs = [
-        CURRENT_DIR + "AbstractResourceLoader.h",
-        CURRENT_DIR + "British.h",
-        CURRENT_DIR + "DimensionTraits.h",
-        CURRENT_DIR + "FileCallback.h",
-        CURRENT_DIR + "Image.h",
-        CURRENT_DIR + "ImageView.h",
-        CURRENT_DIR + "Magnum.h",
-        CURRENT_DIR + "Mesh.h",
-        CURRENT_DIR + "PixelFormat.h",
-        CURRENT_DIR + "PixelStorage.h",
-        CURRENT_DIR + "Resource.h",
-        CURRENT_DIR + "ResourceManager.h",
-        CURRENT_DIR + "Sampler.h",
-        CURRENT_DIR + "Tags.h",
-        CURRENT_DIR + "Timeline.h",
-        CURRENT_DIR + "Types.h",
-        CURRENT_DIR + "VertexFormat.h",
-        CURRENT_DIR + "visibility.h",
-        ":version",
-        ":configure",
-        # MAGNUM_BUILD_DEPRECATED
-        CURRENT_DIR + "Array.h",
-    ],
-    visibility = ["//src/Magnum:__subpackages__"]
-)
-
 corrade_configure_header(
     name = "version",
     src = CURRENT_DIR + "version.h.cmake",
@@ -90,4 +61,84 @@ corrade_configure_header(
     }),
     # TODO: -s USE_WEBGL2=1
     visibility = ["//:__pkg__"]
+)
+
+cc_library(
+    name = "headers",
+    hdrs = [
+        CURRENT_DIR + "AbstractResourceLoader.h",
+        CURRENT_DIR + "British.h",
+        CURRENT_DIR + "DimensionTraits.h",
+        CURRENT_DIR + "FileCallback.h",
+        CURRENT_DIR + "Image.h",
+        CURRENT_DIR + "ImageView.h",
+        CURRENT_DIR + "Magnum.h",
+        CURRENT_DIR + "Mesh.h",
+        CURRENT_DIR + "PixelFormat.h",
+        CURRENT_DIR + "PixelStorage.h",
+        CURRENT_DIR + "Resource.h",
+        CURRENT_DIR + "ResourceManager.h",
+        CURRENT_DIR + "Sampler.h",
+        CURRENT_DIR + "Tags.h",
+        CURRENT_DIR + "Timeline.h",
+        CURRENT_DIR + "Types.h",
+        CURRENT_DIR + "VertexFormat.h",
+        CURRENT_DIR + "visibility.h",
+        ":version",
+        ":configure",
+        # MAGNUM_BUILD_DEPRECATED
+        CURRENT_DIR + "Array.h",
+    ],
+    deps = ["@magnum//:Main"],
+    visibility = ["//src/Magnum:__subpackages__"]
+)
+
+MAGNUM_SRCS = [
+    CURRENT_DIR + "FileCallback.cpp",
+    CURRENT_DIR + "PixelStorage.cpp",
+    CURRENT_DIR + "Resource.cpp",
+    CURRENT_DIR + "Sampler.cpp",
+    CURRENT_DIR + "Timeline.cpp",
+    CURRENT_DIR + "Implementation/ImageProperties.h",
+    CURRENT_DIR + "Implementation/converterUtilities.h",
+    CURRENT_DIR + "Implementation/meshIndexTypeMapping.hpp",
+    CURRENT_DIR + "Implementation/meshPrimitiveMapping.hpp",
+    CURRENT_DIR + "Implementation/compressedPixelFormatMapping.hpp",
+    CURRENT_DIR + "Implementation/pixelFormatMapping.hpp",
+    CURRENT_DIR + "Implementation/vertexFormatMapping.hpp",
+]
+
+MAGNUM_GRACEFUL_ASSERT_SRCS = [
+    CURRENT_DIR + "Image.cpp",
+    CURRENT_DIR + "ImageView.cpp",
+    CURRENT_DIR + "Mesh.cpp",
+    CURRENT_DIR + "PixelFormat.cpp",
+    CURRENT_DIR + "VertexFormat.cpp",
+    CURRENT_DIR + "Animation/Player.cpp",
+    CURRENT_DIR + "Animation/Interpolation.cpp",
+]
+
+cc_library(
+    name = "Magnum",
+    srcs = MAGNUM_SRCS + MAGNUM_GRACEFUL_ASSERT_SRCS,
+    deps = [
+        ":headers",
+        "@corrade//:Utility",
+        "//src/Magnum/Math:Math",
+        "//src/Magnum/Animation:headers",
+    ],
+)
+
+cc_library(
+    name = "MagnumTestLib",
+    srcs = MAGNUM_SRCS + MAGNUM_GRACEFUL_ASSERT_SRCS,
+    deps = [
+        ":headers",
+        "@corrade//:Utility",
+        "//src/Magnum/Math:Math",
+        "//src/Magnum/Animation:headers",
+    ],
+    local_defines = [
+        "CORRADE_GRACEFUL_ASSERT",
+    ],
 )
