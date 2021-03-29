@@ -32,6 +32,7 @@ MATH_SRCS = [
     CURRENT_DIR + "Half.cpp",
     CURRENT_DIR + "Packing.cpp",
     CURRENT_DIR + "instantiation.cpp",
+    CURRENT_DIR + "Implementation/halfTables.hpp",
 ]
 
 MATH_GRACEFUL_ASSERT_SRCS = [
@@ -77,7 +78,6 @@ cc_library(
         CURRENT_DIR + "Vector2.h",
         CURRENT_DIR + "Vector3.h",
         CURRENT_DIR + "Vector4.h",
-        CURRENT_DIR + "Implementation/halfTables.hpp",
     ],
     deps = [
         "//src/Magnum:headers",
