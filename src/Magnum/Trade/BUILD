@@ -22,14 +22,25 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
+load("@corrade//:index.bzl", "corrade_configure_header")
+
 package(default_visibility = ["//visibility:public"])
 
 CURRENT_DIR = "@magnum_src//:src/Magnum/Trade/"
+
+corrade_configure_header(
+    name = "configure",
+    src = CURRENT_DIR + "configure.h.cmake",
+    output = "configure.h",
+    defines = {},
+    visibility = ["//:__pkg__"]
+)
 
 TRADE_SRCS = [
     CURRENT_DIR + "Implementation/arrayUtilities.h",
     CURRENT_DIR + "Implementation/converterUtilities.h",
     CURRENT_DIR + "Implementation/materialAttributeProperties.hpp",
+    CURRENT_DIR + "Implementation/materialLayerProperties.hpp",
     CURRENT_DIR + "ArrayAllocator.cpp",
     CURRENT_DIR + "Data.cpp",
     CURRENT_DIR + "MeshObjectData2D.cpp",
@@ -64,6 +75,7 @@ TRADE_GRACEFUL_ASSERT_SRCS = [
 cc_library(
     name = "headers",
     hdrs = [
+        ":configure",
         CURRENT_DIR + "AbstractImporter.h",
         CURRENT_DIR + "AbstractImageConverter.h",
         CURRENT_DIR + "AbstractSceneConverter.h",
@@ -107,8 +119,7 @@ cc_library(
     deps = [
         ":headers",
         "@corrade//:PluginManager",
-        "@magnum//:Main",
-        "//src/Magnum/Math:headers",
+        "@magnum//:Magnum",
     ],
 )
 
@@ -118,7 +129,7 @@ cc_library(
     deps = [
         ":headers",
         "@corrade//:PluginManager",
-        "@magnum//:Main",
+        "@magnum//:Magnum",
     ],
     local_defines = [
         "CORRADE_GRACEFUL_ASSERT",
