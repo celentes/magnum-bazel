@@ -22,3 +22,130 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
+load("@emsdk//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_test")
+
+test_suite(
+    name = "native",
+    tags = ["-emscripten_test"],
+)
+
+test_suite(
+    name = "emscripten",
+    tags = ["emscripten_test"],
+)
+
+CURRENT_DIR = "@magnum_src//:src/Magnum/Math/Test/"
+
+[cc_test(
+    name = "%s" % t,
+    srcs = [CURRENT_DIR + "%s.cpp" % t],
+    deps = [
+        "@corrade//:TestSuite",
+        "//src/Magnum/Math:MathTestLib",
+    ],
+)
+for t in [
+    "BoolVectorTest",
+    "ConstantsTest",
+    "FunctionsBatchTest",
+    "HalfTest",
+    "PackingTest",
+    "PackingBatchTest",
+    "TagsTest",
+    "TypeTraitsTest",
+    "Vector2Test",
+    "Vector3Test",
+    "Vector4Test",
+    "ColorTest",
+    "RectangularMatrixTest",
+    "SwizzleTest",
+    "UnitTest",
+    "AngleTest",
+    "RangeTest",
+    "DualTest",
+    "BezierTest",
+    "IntersectionBenchmark",
+    "ConfigurationValueTest",
+    "StrictWeakOrderingTest",
+    "VectorBenchmark",
+    "MatrixBenchmark",
+    "FunctionsBenchmark",
+]]
+
+[cc_test(
+    name = "%s" % t,
+    srcs = [CURRENT_DIR + "%s.cpp" % t],
+    deps = [
+        "@corrade//:TestSuite",
+        "//src/Magnum/Math:MathTestLib",
+    ],
+    defines = ["CORRADE_GRACEFUL_ASSERT"],
+)
+for t in [
+    "VectorTest",
+    "MatrixTest",
+    "Matrix3Test",
+    "Matrix4Test",
+    "ComplexTest",
+    "CubicHermiteTest",
+    "DualComplexTest",
+    "FrustumTest",
+    "FunctionsTest",
+    "QuaternionTest",
+    "DualQuaternionTest",
+    "DistanceTest",
+    "IntersectionTest",
+]]
+
+[[wasm_cc_binary(
+    name = "%s_wasm" % t,
+    cc_target = ":%s" % t,
+    testonly = True,
+  ),
+  nodejs_test(
+    name = "Emscripten_%s" % t,
+    data = [":%s_wasm" % t],
+    entry_point = ":%s_wasm/%s.js" % (t, t),
+    tags = ["emscripten_test"],
+  )]
+for t in [
+    "BoolVectorTest",
+    "ConstantsTest",
+    "FunctionsBatchTest",
+    "HalfTest",
+    "PackingTest",
+    "PackingBatchTest",
+    "TagsTest",
+    "TypeTraitsTest",
+    "Vector2Test",
+    "Vector3Test",
+    "Vector4Test",
+    "ColorTest",
+    "RectangularMatrixTest",
+    "SwizzleTest",
+    "UnitTest",
+    "AngleTest",
+    "RangeTest",
+    "DualTest",
+    "BezierTest",
+    "IntersectionBenchmark",
+    "ConfigurationValueTest",
+    "StrictWeakOrderingTest",
+    "VectorBenchmark",
+    "MatrixBenchmark",
+    "FunctionsBenchmark",
+    "VectorTest",
+    "MatrixTest",
+    "Matrix3Test",
+    "Matrix4Test",
+    "ComplexTest",
+    "CubicHermiteTest",
+    "DualComplexTest",
+    "FrustumTest",
+    "FunctionsTest",
+    "QuaternionTest",
+    "DualQuaternionTest",
+    "DistanceTest",
+    "IntersectionTest",
+]]
