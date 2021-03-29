@@ -33,3 +33,8 @@ cc_library(
         "@magnum_src//:include_paths",
     ],
 )
+
+alias(
+    name = "Magnum",
+    actual = "//src/Magnum:Magnum",
+)
