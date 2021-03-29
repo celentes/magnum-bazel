@@ -79,7 +79,11 @@ cc_library(
         CURRENT_DIR + "Vector4.h",
         CURRENT_DIR + "Implementation/halfTables.hpp",
     ],
-    visibility = ["//src/Magnum:__subpackages__"]
+    deps = [
+        "//src/Magnum:headers",
+        "//src/Magnum/Math/Algorithms:headers",
+    ],
+    visibility = ["//src/Magnum:__subpackages__"],
 )
 
 cc_library(
@@ -104,5 +108,6 @@ cc_library(
         "CORRADE_GRACEFUL_ASSERT",
         "Magnum_EXPORTS",
     ],
+    testonly = True,
     visibility = ["//src/Magnum:__subpackages__"]
 )
