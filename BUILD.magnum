@@ -1,9 +1,8 @@
 #
-#   This file is part of Corrade.
+#   This file is part of Magnum.
 #
-#   Copyright © 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016,
-#               2017, 2018, 2019, 2020, 2021
-#             Vladimír Vondruš <mosra@centrum.cz>
+#   Copyright © 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,
+#               2020, 2021 Vladimír Vondruš <mosra@centrum.cz>
 #
 #   Permission is hereby granted, free of charge, to any person obtaining a
 #   copy of this software and associated documentation files (the "Software"),
@@ -23,25 +22,13 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-workspace(name = "magnum")
-
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
-http_archive(
-    name = "emsdk",
-    strip_prefix = "emsdk-c1589b55641787d55d53e883852035beea9aec3f/bazel",
-    url = "https://github.com/emscripten-core/emsdk/archive/c1589b55641787d55d53e883852035beea9aec3f.tar.gz",
-    sha256 = "7a58a9996b113d3e0675df30b5f17e28aa47de2e684a844f05394fe2f6f12e8e",
+exports_files(
+    glob(["**"], exclude_directories=0),
+    visibility = ["//visibility:public"],
 )
 
-load("@emsdk//:deps.bzl", emsdk_deps = "deps")
-emsdk_deps()
-
-load("@emsdk//:emscripten_deps.bzl", emsdk_emscripten_deps = "emscripten_deps")
-emsdk_emscripten_deps()
-
-load(":deps.bzl", "deps")
-deps()
-
-load(":extra_deps.bzl", "corrade_deps")
-corrade_deps()
+cc_library(
+    name = "include_paths",
+    includes = ["src"],
+    visibility = ["//visibility:public"],
+)
