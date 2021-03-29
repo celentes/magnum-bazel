@@ -51,6 +51,8 @@ cc_library(
         CURRENT_DIR + "visibility.h",
         ":version",
         ":configure",
+        # MAGNUM_BUILD_DEPRECATED
+        CURRENT_DIR + "Array.h",
     ],
     visibility = ["//src/Magnum:__subpackages__"]
 )
