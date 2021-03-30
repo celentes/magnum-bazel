@@ -28,19 +28,28 @@ CURRENT_DIR = "@magnum_src//:src/MagnumExternal/OpenGL/"
 
 cc_library(
     name = "FlextGL",
-    hdrs = [
-        CURRENT_DIR + "GL/flextGL.h",
-        CURRENT_DIR + "KHR/khrplatform.h",
-    ],
-    srcs = [
-        CURRENT_DIR + "GL/flextGL.cpp",
-    ],
+    hdrs = select({
+        "@corrade//bazel/platforms:linux": [
+            CURRENT_DIR + "GL/flextGL.h",
+            CURRENT_DIR + "KHR/khrplatform.h",
+        ],
+        "@corrade//bazel/platforms:emscripten": [
+            CURRENT_DIR + "GLES3/flextGLEmscripten.h",
+        ],
+    }),
+    srcs = select({
+        "@corrade//bazel/platforms:linux": [
+            CURRENT_DIR + "GL/flextGL.cpp",
+        ],
+        "@corrade//bazel/platforms:emscripten": [],
+    }),
     deps = [
         "//src/Magnum/GL:headers",
         "@corrade//:Utility",
     ],
 )
 
+# TODO: selects
 filegroup(
     name = "flextGLPlatform.cpp",
     srcs = [
