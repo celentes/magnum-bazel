@@ -48,16 +48,16 @@ corrade_configure_header(
     src = CURRENT_DIR + "configure.h.cmake",
     output = "configure.h",
     defines = select({
-      "@corrade//bazel/platforms:linux": {
-          "MAGNUM_BUILD_DEPRECATED": "1",
-          "MAGNUM_TARGET_GL": "1",
-      },
-      "@corrade//bazel/platforms:emscripten": {
-          "MAGNUM_BUILD_DEPRECATED": "1",
-          "MAGNUM_BUILD_STATIC": "1",
-          "MAGNUM_TARGET_WEBGL": "1",
-          "MAGNUM_TARGET_GLES": "1",
-      },
+        "@corrade//bazel/platforms:linux": {
+            "MAGNUM_BUILD_DEPRECATED": "1",
+            "MAGNUM_TARGET_GL": "1",
+        },
+        "@corrade//bazel/platforms:emscripten": {
+            "MAGNUM_BUILD_DEPRECATED": "1",
+            "MAGNUM_BUILD_STATIC": "1",
+            "MAGNUM_TARGET_WEBGL": "1",
+            "MAGNUM_TARGET_GLES": "1",
+        },
     }),
     # TODO: -s USE_WEBGL2=1
     visibility = ["//:__pkg__"]
