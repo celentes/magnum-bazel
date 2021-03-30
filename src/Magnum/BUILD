@@ -59,7 +59,6 @@ corrade_configure_header(
             "MAGNUM_TARGET_GLES": "1",
         },
     }),
-    # TODO: -s USE_WEBGL2=1
     visibility = ["//:__pkg__"]
 )
 

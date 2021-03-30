@@ -178,6 +178,10 @@ cc_library(
             GL_WEBGL2_SRCS + \
             GL_WEBGL2_GRACEFUL_ASSERT_SRCS,
     }),
+    linkopts = select({
+        "@corrade//bazel/platforms:linux": [],
+        "@corrade//bazel/platforms:emscripten": ["-s", "USE_WEBGL2=1"],
+    }),
     deps = [
         ":headers",
         "//src/Magnum:Magnum",
