@@ -37,6 +37,9 @@ test_suite(
 
 CURRENT_DIR = "@magnum_src//:src/Magnum/GL/Test/"
 
+# TODO: native tests
+# TODO: BUILD_GL_TESTS
+
 [cc_test(
     name = "%s" % t,
     srcs = [CURRENT_DIR + "%s.cpp" % t],
@@ -73,6 +76,10 @@ for t in [
     "TextureTest",
     "TimeQueryTest",
     "VersionTest",
+    "BufferImageTest",
+    "PrimitiveQueryTest",
+    "TextureArrayTest",
+    "TransformFeedbackTest",
 ]]
 
 [[wasm_cc_binary(
@@ -103,4 +110,8 @@ for t in [
     "TextureTest",
     "TimeQueryTest",
     "VersionTest",
+    "BufferImageTest",
+    "PrimitiveQueryTest",
+    "TextureArrayTest",
+    "TransformFeedbackTest",
 ]]
