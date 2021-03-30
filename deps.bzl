@@ -30,9 +30,9 @@ def deps():
     if "corrade" not in excludes:
         http_archive(
             name = "corrade",
-            strip_prefix = "corrade-bazel-88c2b16001f3a2dba1887f19ec03af7e17ec7443",
-            sha256 = "f820d4bc1f40bf6fa29c19050260b1db975266fc0637a55ba3cd115597ebf853",
-            url = "https://github.com/celentes/corrade-bazel/archive/88c2b16001f3a2dba1887f19ec03af7e17ec7443.tar.gz",
+            strip_prefix = "corrade-bazel-566b1cd4da39d2da0feff803c8a81986e8038c0c",
+            sha256 = "0d390faa3fd907132b80a66ae829dd81fd13b7e193211eed722ba76b74b77140",
+            url = "https://github.com/celentes/corrade-bazel/archive/566b1cd4da39d2da0feff803c8a81986e8038c0c.tar.gz",
         )
 
     if "magnum_src" not in excludes:
