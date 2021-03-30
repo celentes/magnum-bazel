@@ -67,6 +67,10 @@ cc_library(
             CURRENT_DIR + "CubeMapTextureArray.h",
             CURRENT_DIR + "ImageFormat.h",
             CURRENT_DIR + "MultisampleTexture.h",
+            CURRENT_DIR + "BufferImage.h",
+            CURRENT_DIR + "PrimitiveQuery.h",
+            CURRENT_DIR + "TextureArray.h",
+            CURRENT_DIR + "TransformFeedback.h",
             CURRENT_DIR + "SampleQuery.h",
         ],
         # NOTE: assumption is WebGL2, revisit if not
@@ -121,6 +125,8 @@ GL_SRCS = [
     CURRENT_DIR + "Implementation/ShaderState.h",
     CURRENT_DIR + "Implementation/State.h",
     CURRENT_DIR + "Implementation/TextureState.h",
+    CURRENT_DIR + "Implementation/pixelFormatMapping.hpp",
+    CURRENT_DIR + "Implementation/compressedPixelFormatMapping.hpp",
 ]
 
 GL_GRACEFUL_ASSERT_SRCS = [
@@ -156,3 +162,26 @@ GL_WEBGL2_SRCS = [
 GL_WEBGL2_GRACEFUL_ASSERT_SRCS = [
     CURRENT_DIR + "BufferImage.cpp",
 ]
+
+cc_library(
+    name = "GL",
+    srcs = select({
+        "@corrade//bazel/platforms:linux": \
+            GL_SRCS + \
+            GL_GRACEFUL_ASSERT_SRCS + \
+            GL_DESKTOP_SRCS + \
+            GL_WEBGL2_SRCS + \
+            GL_WEBGL2_GRACEFUL_ASSERT_SRCS,
+        "@corrade//bazel/platforms:emscripten":
+            GL_SRCS + \
+            GL_GRACEFUL_ASSERT_SRCS + \
+            GL_WEBGL2_SRCS + \
+            GL_WEBGL2_GRACEFUL_ASSERT_SRCS,
+    }),
+    deps = [
+        ":headers",
+        "//src/Magnum:Magnum",
+        "//src/MagnumExternal/OpenGL:FlextGL",
+    ],
+)
+

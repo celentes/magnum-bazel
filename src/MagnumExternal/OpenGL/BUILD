@@ -22,7 +22,7 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-package(default_visibility = ["@magnum//:__subpackages__"])
+package(default_visibility = ["//visibility:public"])
 
 CURRENT_DIR = "@magnum_src//:src/MagnumExternal/OpenGL/"
 
