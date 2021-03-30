@@ -55,8 +55,10 @@ corrade_configure_header(
         "@corrade//bazel/platforms:emscripten": {
             "MAGNUM_BUILD_DEPRECATED": "1",
             "MAGNUM_BUILD_STATIC": "1",
-            "MAGNUM_TARGET_WEBGL": "1",
+            "MAGNUM_TARGET_GL": "1",
             "MAGNUM_TARGET_GLES": "1",
+            "MAGNUM_TARGET_GLES3": "1",
+            "MAGNUM_TARGET_WEBGL": "1",
         },
     }),
     visibility = ["//:__pkg__"]

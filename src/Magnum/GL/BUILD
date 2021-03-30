@@ -154,9 +154,6 @@ GL_WEBGL2_SRCS = [
     CURRENT_DIR + "TransformFeedback.cpp",
     CURRENT_DIR + "Implementation/TransformFeedbackState.cpp",
     CURRENT_DIR + "Implementation/TransformFeedbackState.h",
-    CURRENT_DIR + "BufferTexture.cpp",
-    CURRENT_DIR + "CubeMapTextureArray.cpp",
-    CURRENT_DIR + "MultisampleTexture.cpp",
 ]
 
 GL_WEBGL2_GRACEFUL_ASSERT_SRCS = [
@@ -179,7 +176,7 @@ cc_library(
             GL_WEBGL2_GRACEFUL_ASSERT_SRCS,
     }),
     linkopts = select({
-        "@corrade//bazel/platforms:linux": [],
+        "@corrade//bazel/platforms:linux": ["-lGL"],
         "@corrade//bazel/platforms:emscripten": ["-s", "USE_WEBGL2=1"],
     }),
     deps = [
@@ -189,3 +186,30 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "GLTestLib",
+    srcs = select({
+        "@corrade//bazel/platforms:linux": \
+            GL_SRCS + \
+            GL_GRACEFUL_ASSERT_SRCS + \
+            GL_DESKTOP_SRCS + \
+            GL_WEBGL2_SRCS + \
+            GL_WEBGL2_GRACEFUL_ASSERT_SRCS,
+        "@corrade//bazel/platforms:emscripten":
+            GL_SRCS + \
+            GL_GRACEFUL_ASSERT_SRCS + \
+            GL_WEBGL2_SRCS + \
+            GL_WEBGL2_GRACEFUL_ASSERT_SRCS,
+    }),
+    linkopts = select({
+        "@corrade//bazel/platforms:linux": ["-lGL"],
+        "@corrade//bazel/platforms:emscripten": ["-s", "USE_WEBGL2=1"],
+    }),
+    deps = [
+        ":headers",
+        "//src/Magnum:Magnum",
+        "//src/MagnumExternal/OpenGL:FlextGL",
+    ],
+    local_defines = ["CORRADE_GRACEFUL_ASSERT"],
+    testonly = True,
+)

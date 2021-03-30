@@ -35,6 +35,7 @@ cc_library(
         ],
         "@corrade//bazel/platforms:emscripten": [
             CURRENT_DIR + "GLES3/flextGLEmscripten.h",
+            CURRENT_DIR + "KHR/khrplatform.h",
         ],
     }),
     srcs = select({
