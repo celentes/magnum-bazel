@@ -58,7 +58,7 @@ cc_test(
     deps = [
         "@corrade//:TestSuite",
         "@magnum//:Trade",
-        "@magnum//:TgaImporterPlugin",
+        "@magnum//:TgaImporter",
         ":configure",
     ],
     data = [CURRENT_DIR + "file.tga"],

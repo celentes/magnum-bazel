@@ -62,7 +62,7 @@ cc_test(
     deps = [
         "@corrade//:TestSuite",
         "@magnum//:Trade",
-        "@magnum//:AnyImageImporterPlugin",
+        "@magnum//:AnyImageImporter",
         ":configure",
     ],
     data = [

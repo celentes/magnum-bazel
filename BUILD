@@ -45,7 +45,7 @@ alias(
 )
 
 [alias(
-    name = "%sPlugin" % n,
+    name = "%s" % n,
     actual = "//src/MagnumPlugins/%s:%s" % (n, n),
 )
 for n in [

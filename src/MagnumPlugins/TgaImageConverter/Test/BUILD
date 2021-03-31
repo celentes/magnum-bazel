@@ -56,7 +56,7 @@ cc_test(
     deps = [
         "@corrade//:TestSuite",
         "@magnum//:Trade",
-        "@magnum//:TgaImageConverterPlugin",
+        "@magnum//:TgaImageConverter",
         ":configure",
     ],
 )
