@@ -43,6 +43,9 @@ cc_library(
         CURRENT_DIR + "Tipsify.h",
         CURRENT_DIR + "Transform.h",
         CURRENT_DIR + "visibility.h",
+        # GL specific
+        CURRENT_DIR + "Compile.h",
+        CURRENT_DIR + "FullScreenTriangle.h",
         # deprecated
         CURRENT_DIR + "CombineIndexedArrays.h",
         CURRENT_DIR + "GenerateFlatNormals.h",
@@ -56,6 +59,8 @@ cc_library(
 MESHTOOLS_SRCS = [
     CURRENT_DIR + "Tipsify.cpp",
     CURRENT_DIR + "Implementation/Tipsify.h",
+    # GL specific
+    CURRENT_DIR + "FullScreenTriangle.cpp",
 ]
 
 MESHTOOLS_GRACEFUL_ASSERT_SRCS = [
@@ -69,8 +74,37 @@ MESHTOOLS_GRACEFUL_ASSERT_SRCS = [
     CURRENT_DIR + "Interleave.cpp",
     CURRENT_DIR + "Reference.cpp",
     CURRENT_DIR + "RemoveDuplicates.cpp",
+    # GL specific
+    CURRENT_DIR + "Compile.cpp",
     # deprecated
     CURRENT_DIR + "CombineIndexedArrays.cpp",
 ]
 
-# TODO: TARGET_GL
+cc_library(
+    name = "MeshTools",
+    srcs = MESHTOOLS_SRCS + MESHTOOLS_GRACEFUL_ASSERT_SRCS,
+    deps = [
+        ":headers",
+        "//src/Magnum:Magnum",
+        "//src/Magnum/Trade:Trade",
+        "//src/Magnum/Shaders:headers",
+        # GL specific
+        "//src/Magnum/GL:GL",
+    ],
+)
+
+cc_library(
+    name = "MeshToolsTestLib",
+    srcs = MESHTOOLS_SRCS + MESHTOOLS_GRACEFUL_ASSERT_SRCS,
+    deps = [
+        ":headers",
+        "//src/Magnum:Magnum",
+        "//src/Magnum/Trade:Trade",
+        "//src/Magnum/Shaders:headers",
+        # GL specific
+        "//src/Magnum/GL:GL",
+    ],
+    local_defines = ["CORRADE_GRACEFUL_ASSERT"],
+    testonly = True,
+    visibility = ["//src/Magnum:__subpackages__"],
+)
