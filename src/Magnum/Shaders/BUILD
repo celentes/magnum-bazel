@@ -41,6 +41,8 @@ cc_library(
         CURRENT_DIR + "Vector.h",
         CURRENT_DIR + "VertexColor.h",
         CURRENT_DIR + "visibility.h",
+        # should be in src but is needed by texturetools
+        CURRENT_DIR + "Implementation/CreateCompatibilityShader.h",
     ],
     deps = [
         "//src/Magnum:headers",
@@ -73,7 +75,6 @@ corrade_resource(
 SHADERS_SRCS = [
     CURRENT_DIR + "AbstractVector.cpp",
     CURRENT_DIR + "VertexColor.cpp",
-    CURRENT_DIR + "Implementation/CreateCompatibilityShader.h",
     ":ShadersResources",
 ]
 
