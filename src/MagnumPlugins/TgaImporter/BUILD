@@ -22,34 +22,42 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
+load(
+    "@corrade//:index.bzl",
+    "corrade_configure_header",
+    "corrade_static_plugin",
+    "corrade_dynamic_plugin"
+)
+
 package(default_visibility = ["//visibility:public"])
 
-cc_library(
-    name = "Main",
-    includes = [
-        "src",
+CURRENT_DIR = "@magnum_src//:src/MagnumPlugins/TgaImporter/"
+
+corrade_configure_header(
+    name = "configure",
+    src = CURRENT_DIR + "configure.h.cmake",
+    output = "configure.h",
+    defines = {
+        "MAGNUM_TGAIMPORTER_BUILD_STATIC": "1",
+    },
+    visibility = ["//:__pkg__"]
+)
+
+corrade_static_plugin(
+    name = "TgaImporter",
+    metadata_file = CURRENT_DIR + "TgaImporter.conf",
+    srcs = [
+        CURRENT_DIR + "TgaImporter.cpp",
+        CURRENT_DIR + "importStaticPlugin.cpp",
+    ],
+    hdrs = [
+        CURRENT_DIR + "TgaImporter.h",
+        CURRENT_DIR + "TgaHeader.h",
+        ":configure",
     ],
     deps = [
-        "@magnum_src//:include_paths",
+        "@magnum//:Main",
+        "@magnum//:Trade",
     ],
 )
 
-alias(
-    name = "Magnum",
-    actual = "//src/Magnum:Magnum",
-)
-
-alias(
-    name = "Trade",
-    actual = "//src/Magnum/Trade:Trade",
-)
-
-alias(
-    name = "TgaImporterPlugin",
-    actual = "//src/MagnumPlugins/TgaImporter:TgaImporter",
-)
-
-alias(
-    name = "TgaImageConverterPlugin",
-    actual = "//src/MagnumPlugins/TgaImageConverter:TgaImageConverter",
-)

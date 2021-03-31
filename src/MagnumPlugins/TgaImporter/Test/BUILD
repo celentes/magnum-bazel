@@ -22,34 +22,44 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-package(default_visibility = ["//visibility:public"])
+load("@corrade//:index.bzl", "corrade_configure_header")
+load("@emsdk//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_test")
 
-cc_library(
-    name = "Main",
-    includes = [
-        "src",
+test_suite(
+    name = "native",
+    tags = ["-emscripten_test"],
+)
+
+test_suite(
+    name = "emscripten",
+    tags = ["emscripten_test"],
+)
+
+CURRENT_DIR = "@magnum_src//:src/MagnumPlugins/TgaImporter/Test/"
+
+corrade_configure_header(
+    name = "configure",
+    src = CURRENT_DIR + "configure.h.cmake",
+    output = "configure.h",
+    defines = {
+        "TGAIMPORTER_TEST_DIR": "$(rootpath %s)" % CURRENT_DIR[:-1],
+    },
+    deps = [CURRENT_DIR[:-1]],
+    visibility = ["//:__pkg__"],
+    local = True,
+)
+
+cc_test(
+    name = "TgaImporterTest",
+    srcs = [
+        CURRENT_DIR + "TgaImporterTest.cpp",
     ],
     deps = [
-        "@magnum_src//:include_paths",
+        "@corrade//:TestSuite",
+        "@magnum//:Trade",
+        "@magnum//:TgaImporterPlugin",
+        ":configure",
     ],
-)
-
-alias(
-    name = "Magnum",
-    actual = "//src/Magnum:Magnum",
-)
-
-alias(
-    name = "Trade",
-    actual = "//src/Magnum/Trade:Trade",
-)
-
-alias(
-    name = "TgaImporterPlugin",
-    actual = "//src/MagnumPlugins/TgaImporter:TgaImporter",
-)
-
-alias(
-    name = "TgaImageConverterPlugin",
-    actual = "//src/MagnumPlugins/TgaImageConverter:TgaImageConverter",
+    data = [CURRENT_DIR + "file.tga"],
 )
