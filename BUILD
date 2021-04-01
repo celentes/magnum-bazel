@@ -39,10 +39,28 @@ alias(
     actual = "//src/Magnum:Magnum",
 )
 
-alias(
-    name = "Trade",
-    actual = "//src/Magnum/Trade:Trade",
+[alias(
+    name = lib,
+    actual = "//src/Magnum/%s:%s" % (lib, lib),
 )
+for lib in [
+    "DebugTools",
+    "GL",
+    "Math",
+    "MeshTools",
+    "Primitives",
+    "SceneGraph",
+    "Shaders",
+    "Trade",
+]]
+
+[alias(
+    name = app,
+    actual = "//src/Magnum/Platform:%s" % app,
+)
+for app in [
+    "EmscriptenApplication",
+]]
 
 [alias(
     name = "%s" % n,
