@@ -42,28 +42,6 @@ cc_library(
     visibility = ["@magnum//:__subpackages__"],
 )
 
-corrade_resource(
-    name = "ShadersResources",
-    conf = CURRENT_DIR + "resources.conf",
-    deps = [
-        CURRENT_DIR + "AbstractVector.vert",
-        CURRENT_DIR + "Flat.vert",
-        CURRENT_DIR + "Flat.frag",
-        CURRENT_DIR + "FullScreenTriangle.glsl",
-        CURRENT_DIR + "generic.glsl",
-        CURRENT_DIR + "MeshVisualizer.vert",
-        CURRENT_DIR + "MeshVisualizer.geom",
-        CURRENT_DIR + "MeshVisualizer.frag",
-        CURRENT_DIR + "Phong.vert",
-        CURRENT_DIR + "Phong.frag",
-        CURRENT_DIR + "Vector.frag",
-        CURRENT_DIR + "DistanceFieldVector.frag",
-        CURRENT_DIR + "VertexColor.vert",
-        CURRENT_DIR + "VertexColor.frag",
-        CURRENT_DIR + "compatibility.glsl",
-    ],
-)
-
 SHADERTOOLS_GRACEFUL_ASSERT_SRCS = [
     CURRENT_DIR + "AbstractConverter.cpp",
     CURRENT_DIR + "Stage.cpp",

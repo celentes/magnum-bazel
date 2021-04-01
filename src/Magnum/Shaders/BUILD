@@ -51,7 +51,7 @@ cc_library(
 )
 
 corrade_resource(
-    name = "ShadersResources",
+    name = "MagnumShaders_RCS",
     conf = CURRENT_DIR + "resources.conf",
     deps = [
         CURRENT_DIR + "AbstractVector.vert",
@@ -75,7 +75,7 @@ corrade_resource(
 SHADERS_SRCS = [
     CURRENT_DIR + "AbstractVector.cpp",
     CURRENT_DIR + "VertexColor.cpp",
-    ":ShadersResources",
+    ":MagnumShaders_RCS",
 ]
 
 SHADERS_GRACEFUL_ASSERT_SRCS = [

@@ -45,7 +45,7 @@ cc_library(
 )
 
 corrade_resource(
-    name = "TextureToolsResources",
+    name = "MagnumTextureTools_RCS",
     conf = CURRENT_DIR + "resources.conf",
     deps = [
         CURRENT_DIR + "DistanceFieldShader.vert",
@@ -56,7 +56,7 @@ corrade_resource(
 )
 
 TEXTURETOOLS_SRC = [
-    ":TextureToolsResources",
+    ":MagnumTextureTools_RCS",
     CURRENT_DIR + "Atlas.cpp",
     CURRENT_DIR + "DistanceField.cpp",
 ]

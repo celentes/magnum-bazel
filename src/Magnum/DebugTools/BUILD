@@ -61,7 +61,7 @@ cc_library(
 )
 
 corrade_resource(
-    name = "DebugToolsResources",
+    name = "MagnumDebugTools_RESOURCES",
     conf = CURRENT_DIR + "resources.conf",
     deps = [
         CURRENT_DIR + "TextureImage.vert",
@@ -95,7 +95,7 @@ cc_library(
             CURRENT_DIR + "BufferData.cpp",
         ],
         "@corrade//bazel/platforms:emscripten": [
-            ":DebugToolsResources",
+            ":MagnumDebugTools_RESOURCES",
         ]
     }),
     deps = [
