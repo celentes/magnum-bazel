@@ -146,6 +146,9 @@ GL_DESKTOP_SRCS = [
     CURRENT_DIR + "DebugOutput.cpp",
     CURRENT_DIR + "Implementation/DebugState.cpp",
     CURRENT_DIR + "Implementation/DebugState.h",
+    CURRENT_DIR + "BufferTexture.cpp",
+    CURRENT_DIR + "CubeMapTextureArray.cpp",
+    CURRENT_DIR + "MultisampleTexture.cpp",
 ]
 
 GL_WEBGL2_SRCS = [
