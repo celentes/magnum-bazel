@@ -34,6 +34,7 @@ cc_library(
         CURRENT_DIR + "Screen.h",
         CURRENT_DIR + "ScreenedApplication.h",
         CURRENT_DIR + "ScreenedApplication.hpp",
+        CURRENT_DIR + "AbstractXApplication.h",
     ],
     deps = [
         "//src/Magnum:headers",
@@ -77,23 +78,25 @@ cc_library(
 
 # TODO: native
 # TODO: fix SDL2 not being preloaded on emscripten side
-cc_library(
-    name = "Sdl2Application",
-    srcs = [CURRENT_DIR + "Sdl2Application.cpp"],
-    hdrs = [CURRENT_DIR + "Sdl2Application.h"],
-    deps = [
-        ":Platform",
-        "//src/Magnum/GL:GL",
-        # TODO: this is not needed on emscripten
-        #"@bazelregistry_sdl2//:SDL2_lib",
-    ],
-    linkopts = select({
-        "@corrade//bazel/platforms:linux": [],
-        "@corrade//bazel/platforms:emscripten": [
-            "-s", "USE_SDL=2",
-        ],
-    }),
-)
+#cc_library(
+#    name = "Sdl2Application",
+#    srcs = [CURRENT_DIR + "Sdl2Application.cpp"],
+#    hdrs = [CURRENT_DIR + "Sdl2Application.h"],
+#    deps = [
+#        ":Platform",
+#        "//src/Magnum/GL:GL",
+#    ] + select({
+#        "@corrade//bazel/platforms:linux": [
+#        ],
+#        "@corrade//bazel/platforms:emscripten": [],
+#    }),
+#    linkopts = select({
+#        "@corrade//bazel/platforms:linux": [],
+#        "@corrade//bazel/platforms:emscripten": [
+#            "-s", "USE_SDL=2",
+#        ],
+#    }),
+#)
 
 cc_library(
     name = "EmscriptenApplication",
@@ -104,3 +107,70 @@ cc_library(
         "//src/Magnum/GL:GL",
     ],
 )
+
+cc_library(
+    name = "AbstractXApplication",
+    srcs = [CURRENT_DIR + "AbstractXApplication.cpp"],
+    hdrs = [
+        CURRENT_DIR + "AbstractXApplication.h",
+        CURRENT_DIR + "Implementation/AbstractContextHandler.h",
+    ],
+    copts = ["-Wno-old-style-cast"],
+    deps = [
+        ":headers",
+        "//src/Magnum/GL:GL",
+    ],
+)
+
+cc_library(
+    name = "GlxContextHandler",
+    srcs = [
+        CURRENT_DIR + "Implementation/GlxContextHandler.cpp",
+        CURRENT_DIR + "Implementation/AbstractContextHandler.h",
+        CURRENT_DIR + "Implementation/GlxContextHandler.h",
+    ],
+    copts = ["-Wno-old-style-cast"],
+    deps = [
+        ":headers",
+        "//src/Magnum/GL:GL",
+    ],
+)
+
+cc_library(
+    name = "GlxContextObjects",
+    srcs = [
+        CURRENT_DIR + "Implementation/OpenGLFunctionLoader.cpp",
+        CURRENT_DIR + "Implementation/OpenGLFunctionLoader.h",
+        "@magnum_src//:src/MagnumExternal/OpenGL/GL/flextGLPlatform.cpp",
+    ],
+    copts = ["-Wno-old-style-cast"],
+    local_defines = ["MAGNUM_PLATFORM_USE_GLX"],
+    deps = [
+        ":headers",
+        "//src/Magnum/GL:GL",
+    ],
+)
+
+cc_library(
+    name = "GlxApplication",
+    srcs = [CURRENT_DIR + "GlxApplication.cpp"],
+    hdrs = [CURRENT_DIR + "GlxApplication.h"],
+    deps = [
+        ":GlxContextHandler",
+        ":GlxContextObjects",
+        ":AbstractXApplication",
+    ],
+    linkopts = ["-lGLX", "-lX11"],
+)
+
+cc_library(
+    name = "WindowlessGlxApplication",
+    srcs = [CURRENT_DIR + "WindowlessGlxApplication.cpp"],
+    hdrs = [CURRENT_DIR + "WindowlessGlxApplication.h"],
+    deps = [
+        ":GlxContextObjects",
+        ":AbstractXApplication",
+    ],
+    linkopts = ["-lGLX", "-lX11"],
+)
+
