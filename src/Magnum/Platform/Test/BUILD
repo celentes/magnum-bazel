@@ -37,19 +37,19 @@ test_suite(
 
 CURRENT_DIR = "@magnum_src//:src/Magnum/Platform/Test/"
 
-cc_binary(
-    name = "Sdl2ApplicationTest",
-    srcs = [
-        CURRENT_DIR + "Sdl2ApplicationTest.cpp",
-    ],
-    deps = [
-        "@corrade//:TestSuite",
-        "@corrade//:Main",
-        "@corrade//:PluginManager",
-        "//src/Magnum/Platform:Sdl2Application",
-        "//src/Magnum/Trade:headers",
-    ],
-)
+#cc_binary(
+#    name = "Sdl2ApplicationTest",
+#    srcs = [
+#        CURRENT_DIR + "Sdl2ApplicationTest.cpp",
+#    ],
+#    deps = [
+#        "@corrade//:TestSuite",
+#        "@corrade//:Main",
+#        "@corrade//:PluginManager",
+#        "//src/Magnum/Platform:Sdl2Application",
+#        "//src/Magnum/Trade:headers",
+#    ],
+#)
 
 cc_binary(
     name = "EmscriptenApplicationTest",
