@@ -60,6 +60,8 @@ for lib in [
 )
 for app in [
     "EmscriptenApplication",
+    "GlxApplication",
+    "WindowlessGlxApplication",
 ]]
 
 [alias(
