@@ -216,3 +216,34 @@ cc_library(
     local_defines = ["CORRADE_GRACEFUL_ASSERT"],
     testonly = True,
 )
+
+cc_library(
+    name = "OpenGLTester",
+    srcs = [CURRENT_DIR + "OpenGLTester.cpp"],
+    hdrs = [CURRENT_DIR + "OpenGLTester.h"],
+    deps = [
+        "//src/Magnum:Magnum",
+        "@corrade//:TestSuite",
+    ] + select({
+        "@corrade//bazel/platforms:linux": [
+            "//src/Magnum/Platform:WindowlessGlxApplication"
+        ],
+        "@corrade//bazel/platforms:emscripten": [],
+    }),
+)
+
+cc_library(
+    name = "OpenGLTesterTestLib",
+    deps = [
+        ":GLTestLib",
+        ":OpenGLTester",
+        "//src/Magnum:Magnum",
+        "@corrade//:TestSuite",
+    ] + select({
+        "@corrade//bazel/platforms:linux": [
+            "//src/Magnum/Platform:WindowlessGlxApplication"
+        ],
+        "@corrade//bazel/platforms:emscripten": [],
+    }),
+    testonly = True,
+)

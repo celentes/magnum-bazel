@@ -24,6 +24,7 @@
 #
 load("@emsdk//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
 load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_test")
+load("@corrade//:index.bzl", "corrade_configure_header")
 
 test_suite(
     name = "native",
@@ -37,6 +38,26 @@ test_suite(
 
 CURRENT_DIR = "@magnum_src//:src/Magnum/GL/Test/"
 
+#corrade_configure_header(
+#    name = "configure",
+#    src = CURRENT_DIR + "configure.h.cmake",
+#    output = "configure.h",
+#    defines = select({
+#        "@corrade//bazel/platforms:linux": {
+#            "MAGNUM_BUILD_DEPRECATED": "1",
+#            "MAGNUM_TARGET_GL": "1",
+#        },
+#        "@corrade//bazel/platforms:emscripten": {
+#            "MAGNUM_BUILD_DEPRECATED": "1",
+#            "MAGNUM_BUILD_STATIC": "1",
+#            "MAGNUM_TARGET_GL": "1",
+#            "MAGNUM_TARGET_GLES": "1",
+#            "MAGNUM_TARGET_GLES3": "1",
+#            "MAGNUM_TARGET_WEBGL": "1",
+#        },
+#    }),
+#    visibility = ["//:__pkg__"]
+#)
 # TODO: native tests
 # TODO: BUILD_GL_TESTS
 
@@ -80,7 +101,48 @@ for t in [
     "PrimitiveQueryTest",
     "TextureArrayTest",
     "TransformFeedbackTest",
+    "SampleQueryTest",
+    # non webgl
+    "BufferTextureTest",
+    "CubeMapTextureArrayTest",
+    "MultisampleTextureTest",
+    "PipelineStatisticsQueryTest",
+    "RectangleTextureTest",
 ]]
+
+# TODO: these for emscripten
+# these run successfully when used with bazel run, but fail on bazel test
+# TODO: INVESTIGATE WHY
+
+#[cc_test(
+#    name = "%s" % t,
+#    srcs = [CURRENT_DIR + "%s.cpp" % t],
+#    deps = [
+#        "@corrade//:TestSuite",
+#        "//src/Magnum/GL:OpenGLTester",
+#    ],
+#)
+#for t in [
+#    "BufferGLTest",
+#    "RenderbufferGLTest",
+#    "TimeQueryGLTest",
+#]]
+#
+#[cc_test(
+#    name = "%s" % t,
+#    srcs = [CURRENT_DIR + "%s.cpp" % t],
+#    deps = [
+#        "@corrade//:TestSuite",
+#        "//src/Magnum/GL:OpenGLTesterTestLib",
+#    ],
+#)
+#for t in [
+#    "AbstractTextureGLTest",
+#    "CubeMapTextureGLTest",
+#    "FramebufferGLTest",
+#    "MeshGLTest",
+#    "TextureGLTest",
+#]]
 
 [[wasm_cc_binary(
     name = "%s_wasm" % t,
@@ -114,4 +176,5 @@ for t in [
     "PrimitiveQueryTest",
     "TextureArrayTest",
     "TransformFeedbackTest",
+    "SampleQueryTest",
 ]]
