@@ -174,3 +174,13 @@ cc_library(
     linkopts = ["-lGLX", "-lX11"],
 )
 
+cc_library(
+    name = "GlfwApplication",
+    srcs = [CURRENT_DIR + "GlfwApplication.cpp"],
+    hdrs = [CURRENT_DIR + "GlfwApplication.h"],
+    deps = [
+        ":Platform",
+        "//src/Magnum/GL:GL",
+        "@glfw//:glfw",
+    ],
+)

@@ -43,3 +43,12 @@ def deps():
             url = "https://github.com/mosra/magnum/archive/7154200e16472e6f663e222cffc60533693e8180.tar.gz",
             build_file = "@magnum//:BUILD.magnum",
         )
+
+    if "glfw" not in excludes:
+        http_archive(
+            name="glfw",
+            url="https://github.com/glfw/glfw/archive/8d7e5cdb49a1a5247df612157ecffdd8e68923d2.tar.gz",
+            strip_prefix="glfw-8d7e5cdb49a1a5247df612157ecffdd8e68923d2",
+            sha256="66340d8f015381a368ed34e5eb20c3de2cdd916461fa43d2703d624baa48dde8",
+            build_file = "@magnum//:BUILD.glfw",
+        )

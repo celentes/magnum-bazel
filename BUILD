@@ -61,6 +61,7 @@ for lib in [
 for app in [
     "EmscriptenApplication",
     "GlxApplication",
+    "GlfwApplication",
     "WindowlessGlxApplication",
 ]]
 
