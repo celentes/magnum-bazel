@@ -180,7 +180,8 @@ cc_library(
     hdrs = [CURRENT_DIR + "GlfwApplication.h"],
     deps = [
         ":Platform",
-        "//src/Magnum/GL:GL",
+        ":GlxContextObjects",
         "@glfw//:glfw",
     ],
+    linkopts = ["-pthread"],
 )
